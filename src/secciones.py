@@ -126,17 +126,76 @@ def crear_seccion_imputacion(df_mannwhitney):
 # Sección: Correlación cruzada
 # ============================================================
 
-def crear_seccion_correlacion_cruzada():
+# ============================================================
+# Sección: Correlación cruzada
+# ============================================================
+
+def crear_seccion_correlacion_cruzada(fig_correlacion_cruzada, df_lags):
 
     return dbc.Card([
         dbc.CardBody([
 
             html.H3("Correlación cruzada", className="card-title"),
 
-            dbc.Alert(
-                "Esta sección queda preparada para incluir las gráficas y resultados "
-                "de correlación cruzada entre estaciones.",
-                color="secondary"
+            html.P(
+                "Debido a que las estaciones explicativas se encuentran a diferentes distancias "
+                "de Calamar, se evaluó la correlación cruzada para identificar el desfase temporal "
+                "que maximiza la relación entre cada estación y la serie objetivo.",
+                className="card-text"
+            ),
+
+            html.P(
+                "En este análisis, un lag positivo indica que la estación explicativa antecede "
+                "temporalmente a Calamar.",
+                className="card-text"
+            ),
+
+            dcc.Graph(
+                figure=fig_correlacion_cruzada,
+                config={
+                    "displayModeBar": True,
+                    "scrollZoom": True,
+                    "displaylogo": False,
+                    "toImageButtonOptions": {
+                        "format": "png",
+                        "filename": "correlacion_cruzada",
+                        "height": 1100,
+                        "width": 1200,
+                        "scale": 2
+                    }
+                }
+            ),
+
+            html.H4("Resumen de lags óptimos", className="mt-4"),
+
+            dash_table.DataTable(
+                data=df_lags.to_dict("records"),
+                columns=[
+                    {"name": col, "id": col}
+                    for col in df_lags.columns
+                ],
+                page_size=10,
+                style_table={
+                    "overflowX": "auto",
+                    "marginTop": "15px",
+                    "marginBottom": "25px"
+                },
+                style_cell={
+                    "textAlign": "center",
+                    "padding": "8px",
+                    "fontFamily": "Arial",
+                    "fontSize": "14px",
+                    "whiteSpace": "normal",
+                    "height": "auto"
+                },
+                style_header={
+                    "fontWeight": "bold",
+                    "backgroundColor": "#f2f2f2",
+                    "border": "1px solid #d9d9d9"
+                },
+                style_data={
+                    "border": "1px solid #e6e6e6"
+                }
             )
 
         ])

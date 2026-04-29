@@ -13,7 +13,7 @@ from src.secciones import (
 # Crear layout principal
 # ============================================================
 
-def crear_layout(fig_series_tiempo, df_mannwhitney):
+def crear_layout(fig_series_tiempo, df_mannwhitney, fig_correlacion_cruzada, df_lags):
 
     seccion_exploracion_inicial = crear_seccion_exploracion_inicial(fig_series_tiempo)
 

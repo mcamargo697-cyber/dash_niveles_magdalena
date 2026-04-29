@@ -13,7 +13,13 @@ from src.secciones import (
 # Registrar callbacks
 # ============================================================
 
-def registrar_callbacks(app, fig_series_tiempo, df_mannwhitney):
+def registrar_callbacks(
+    app,
+    fig_series_tiempo,
+    df_mannwhitney,
+    fig_correlacion_cruzada,
+    df_lags
+):
 
     @app.callback(
         Output("contenido-eda", "children"),
@@ -37,7 +43,10 @@ def registrar_callbacks(app, fig_series_tiempo, df_mannwhitney):
         boton_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
         if boton_id == "btn-correlacion-cruzada":
-            return crear_seccion_correlacion_cruzada()
+          return crear_seccion_correlacion_cruzada(
+            fig_correlacion_cruzada,
+            df_lags
+    )
 
         elif boton_id == "btn-exploracion-inicial":
             return crear_seccion_exploracion_inicial(fig_series_tiempo)
